@@ -1,5 +1,5 @@
 import { Link } from "expo-router";
-import { FlatList, Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { FlatList, Image, ImageBackground, Pressable, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Card from "../../components/Card";
 import { useState } from "react";
@@ -140,6 +140,7 @@ const Kain = [
 
 export default function HomeScreen() {
   const [batik, setBatik] = useState(Kain);
+
   const filterBatik = (categoryId) => {
     if (categoryId === "A") {
       setBatik(Kain);
@@ -148,9 +149,9 @@ export default function HomeScreen() {
       setBatik(filteredBatik);
     }
   };
+
   const Header = () => (
     <View style={styles.header}>
-      <Text style={styles.headerText}>Batik Collection</Text>
       <FlatList
         data={categories}
         horizontal
@@ -167,24 +168,46 @@ export default function HomeScreen() {
   );
 
   return (
-    <SafeAreaView style={styles.container}>
-      <FlatList
-        data={batik}
-        numColumns={2}
-        renderItem={({ item }) => <Card item={item} />}
-        keyExtractor={(item) => item.id}
-        columnWrapperStyle={{
-          justifyContent: 'space-between',
-          marginBottom: 6,
-        }}
-        key={`numColumns-${2}`}
-        ListHeaderComponent={Header}
-      />
-    </SafeAreaView>
+    <ImageBackground
+        source={{ uri: "https://png.pngtree.com/thumb_back/fh260/background/20210807/pngtree-indonesian-batik-parang-image_758387.jpg" }}
+        resizeMode="cover"
+        style={styles.background}
+        imageStyle={styles.imageStyle}
+      >
+        <Text style={styles.title}>Batik Collection</Text>
+      <SafeAreaView style={styles.container}>
+        <FlatList
+          data={batik}
+          numColumns={2}
+          renderItem={({ item }) => <Card item={item} />}
+          keyExtractor={(item) => item.id}
+          columnWrapperStyle={{
+            justifyContent: 'space-between',
+            marginBottom: 6,
+          }}
+          key={`numColumns-${2}`}
+          ListHeaderComponent={Header}
+        />
+      </SafeAreaView>
+    </ImageBackground>
   );
 }
 
+
 const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  imageStyle: {
+    opacity: 0.2,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#000',
+  },
   container: {
     flex: 1,
     padding: 16,
